@@ -14,6 +14,7 @@ class Deck
   end
 
   def take_card
+    @cards.delete_at(0)
   end
 
   private
