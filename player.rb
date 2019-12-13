@@ -13,16 +13,12 @@ class Player
     validate!
   end
 
-  def action_add_card(card)
-    @hand.push(card)
-  end
-
   def increase_score_by(value)
     validate_positive(value)
     @score += value
   end
 
-  def action_make_bet(value = 10)
+  def make_bet(value = 10)
     validate_positive(value)
     @money -= value
   end
@@ -32,12 +28,24 @@ class Player
     @money += value
   end
 
-  def action_skip
-    :skip_turn
+  def take_turn
+    begin
+      show_choice
+      choice = process_user_input
+    rescue BlackjackError
+      retry
+    end
+
+    case choice.to_i
+    when 1
+      action_add_card
+    when 2
+      action_skip
+    end
   end
 
-  def action_open_hands
-    :action_open_hands
+  def add_card(card)
+    @hand.push(card)
   end
 
   private
@@ -56,5 +64,30 @@ class Player
     message = 'It should be positive integer!'
     value_is_correct = value.is_a?(Integer) && value.positive?
     raise BlackjackError, message unless value_is_correct
+  end
+
+  def show_choice
+    puts 'It`s your turn. Choose one of the options:'
+    puts '1. Take one more card'
+    puts '2. Skip turn'
+  end
+
+  def process_user_input
+    input = gets.chomp
+    check_input(input)
+    input
+  end
+
+  def check_input(input)
+    message = 'Please, select either 1 or 2'
+    raise BlackjackError, message unless %w[1 2].include? input
+  end
+
+  def action_skip
+    :skip_turn
+  end
+
+  def action_add_card
+    :add_card
   end
 end
