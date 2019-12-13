@@ -33,7 +33,11 @@ class Player
   end
 
   def skip
-    :skip
+    :skip_turn
+  end
+
+  def open_hands
+    :open_hands
   end
 
   private
