@@ -16,7 +16,7 @@ class Card
     validate!
   end
 
-  def values
+  def self.values
     VALUES
   end
 
