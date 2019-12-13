@@ -9,9 +9,9 @@ class Player
     @hand = []
     @score = 0
     @table = table
-    table.add_to_table(self)
     @money = money
     validate!
+    table.add_to_table(self)
   end
 
   def increase_score_by(value)
