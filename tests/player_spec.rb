@@ -8,8 +8,8 @@ describe 'Player' do
   before(:all) do
     @player = Player.new(Table.new)
   end
-  context 'player creation' do
-    it 'creates deck objects' do
+  context 'player operation' do
+    it 'creates player objects' do
       expect { Player.new(Table.new) }.not_to raise_error
       expect(@player.hand).to eq([])
       expect(@player.money).to eq(100)
