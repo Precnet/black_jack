@@ -1,1 +1,2 @@
-
+class Table
+end
