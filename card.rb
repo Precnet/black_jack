@@ -7,6 +7,8 @@ class Card
   SUIT_LENGTH = 1
   VALUE_LENGTH = 2
 
+  attr_reader :suit, :value
+
   def initialize(value, suit)
     @suit = suit
     @value = value
