@@ -4,8 +4,9 @@
 require_relative 'blackjack_error.rb'
 
 class Card
-  SUIT_LENGTH = 1
   VALUE_LENGTH = 2
+  SUITS = { spades: 'U+2660', hearts: 'U+2665',
+            diamonds: 'U+2666', clubs: 'U+2663' }.freeze
 
   attr_reader :suit, :value
 
@@ -23,8 +24,9 @@ class Card
   end
 
   def validate_suit
-    validate_type(@suit, String)
-    validate_length(@suit, SUIT_LENGTH)
+    validate_type(@suit, Symbol)
+    message = 'Wrong suit for card!'
+    raise BlackjackError, message unless SUITS.keys.include? @suit
   end
 
   def validate_value
