@@ -23,11 +23,11 @@ class Player
 
   def make_bet(value = 10)
     validate_positive(value)
-
     @money -= value
   end
 
   def take_bank(value)
+    validate_positive(value)
     @money += value
   end
 
