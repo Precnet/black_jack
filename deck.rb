@@ -9,6 +9,13 @@ class Deck
     @cards = create_deck
   end
 
+  def shuffle!
+    @cards.shuffle!
+  end
+
+  def take_card
+  end
+
   private
 
   def create_deck
