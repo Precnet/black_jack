@@ -54,4 +54,11 @@ describe 'Player' do
       expect { @player.take_bank(-10) }.to raise_error BlackjackError
     end
   end
+  context 'taking turn' do
+    it 'displays choice menu to user and process input' do
+      message = "It`s your turn. Choose one of the options:\n1. Take one more card\n2. Skip turn\n"
+      allow_any_instance_of(Kernel).to receive(:gets).and_return('1')
+      expect { @player.take_turn }.to output(message).to_stdout
+    end
+  end
 end
