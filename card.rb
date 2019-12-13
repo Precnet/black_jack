@@ -4,8 +4,8 @@
 require_relative 'blackjack_error.rb'
 
 class Card
-  SUITS = { spades: 'U+2660', hearts: 'U+2665',
-            diamonds: 'U+2666', clubs: 'U+2663' }.freeze
+  SUITS = { spades: "\u2660", hearts: "\u2665",
+            diamonds: "\u2666", clubs: "\u2663" }.freeze
   VALUES = %I[a 2 3 4 5 6 7 8 9 10 j q k].freeze
 
   attr_reader :suit, :value
