@@ -16,6 +16,10 @@ class Card
     validate!
   end
 
+  def values
+    VALUES
+  end
+
   private
 
   def validate!
