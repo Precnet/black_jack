@@ -41,6 +41,8 @@ class Player
       action_add_card
     when 2
       action_skip
+    when 3
+      action_open_hands
     end
   end
 
@@ -70,6 +72,7 @@ class Player
     puts 'It`s your turn. Choose one of the options:'
     puts '1. Take one more card'
     puts '2. Skip turn'
+    puts '3. Open hands'
   end
 
   def process_user_input
@@ -79,8 +82,8 @@ class Player
   end
 
   def check_input(input)
-    message = 'Please, select either 1 or 2'
-    raise BlackjackError, message unless %w[1 2].include? input
+    message = 'Please, select either 1, 2 or 3'
+    raise BlackjackError, message unless %w[1 2 3].include? input
   end
 
   def action_skip
@@ -89,5 +92,9 @@ class Player
 
   def action_add_card
     :add_card
+  end
+
+  def action_open_hands
+    :open_hands
   end
 end
