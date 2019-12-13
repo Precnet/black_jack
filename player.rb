@@ -31,6 +31,10 @@ class Player
     @money += value
   end
 
+  def skip
+    :skip
+  end
+
   private
 
   def validate!
