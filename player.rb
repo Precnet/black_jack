@@ -22,8 +22,7 @@ class Player
   end
 
   def make_bet(value = 10)
-    message = 'Not enough money!'
-    raise BlackjackError, message if (@money - value).negative?
+    validate_positive(value)
 
     @money -= value
   end
