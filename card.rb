@@ -7,6 +7,7 @@ class Card
   VALUE_LENGTH = 2
   SUITS = { spades: 'U+2660', hearts: 'U+2665',
             diamonds: 'U+2666', clubs: 'U+2663' }.freeze
+  VALUES = %I[a 2 3 4 5 6 7 8 9 10 j q k].freeze
 
   attr_reader :suit, :value
 
@@ -25,24 +26,18 @@ class Card
 
   def validate_suit
     validate_type(@suit, Symbol)
-    message = 'Wrong suit for card!'
+    message = "Wrong suit for a card: '#{@suit}'!"
     raise BlackjackError, message unless SUITS.keys.include? @suit
   end
 
   def validate_value
-    validate_type(@value, String)
-    validate_length(@value, VALUE_LENGTH)
+    validate_type(@value, Symbol)
+    message = "Wrong value for a card: '#{@value}'!"
+    raise BlackjackError, message unless VALUES.include? @value
   end
 
   def validate_type(attribute, type)
     message = "'#{attribute}' should be '#{type}'! Got = '#{attribute.class}"
     raise BlackjackError, message unless attribute.is_a? type
-  end
-
-  def validate_length(attribute, length)
-    message = "'#{attribute}' should have length between 0 and '#{length}'!"
-    unless !attribute.empty? && attribute.length <= length
-      raise BlackjackError, message
-    end
   end
 end
