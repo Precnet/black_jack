@@ -2,14 +2,15 @@
 
 require 'rspec'
 require_relative '../player.rb'
+require_relative '../table.rb'
 
 describe 'Player' do
   before(:all) do
-    @player = Player.new
+    @player = Player.new(Table.new)
   end
   context 'player creation' do
     it 'creates deck objects' do
-      expect { Player.new }.not_to raise_error
+      expect { Player.new(Table.new) }.not_to raise_error
       expect(@player.hand).to eq([])
       expect(@player.money).to eq(100)
       expect(@player.score).to eq(0)
