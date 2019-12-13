@@ -24,6 +24,10 @@ class Card
     SUITS
   end
 
+  def to_s
+    @value.to_s + SUITS[@suit]
+  end
+
   private
 
   def validate!
