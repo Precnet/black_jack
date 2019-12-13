@@ -5,6 +5,7 @@ require_relative 'dealer.rb'
 
 class Table
   SCORES = {}
+  attr_reader :players, :dealer
 
   def initialize
     @players = []
@@ -67,6 +68,5 @@ class Table
   end
 
   def calculate_score(cards)
-
   end
 end
