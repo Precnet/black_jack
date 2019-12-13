@@ -35,7 +35,7 @@ class Player
   private
 
   def validate!
-    validate_positive(value)
+    validate_positive(@money)
   end
 
   def validate_positive(value)
