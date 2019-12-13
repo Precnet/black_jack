@@ -13,7 +13,7 @@ class Player
     validate!
   end
 
-  def add_card(card)
+  def action_add_card(card)
     @hand.push(card)
   end
 
@@ -22,7 +22,7 @@ class Player
     @score += value
   end
 
-  def make_bet(value = 10)
+  def action_make_bet(value = 10)
     validate_positive(value)
     @money -= value
   end
@@ -32,12 +32,12 @@ class Player
     @money += value
   end
 
-  def skip
+  def action_skip
     :skip_turn
   end
 
-  def open_hands
-    :open_hands
+  def action_open_hands
+    :action_open_hands
   end
 
   private
