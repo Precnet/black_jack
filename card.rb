@@ -39,7 +39,7 @@ class Card
 
   def validate_length(attribute, length)
     message = "'#{attribute}' should have length between 0 and '#{length}'!"
-    unless !attribute.empty? && attribute.length < length
+    unless !attribute.empty? && attribute.length <= length
       raise BlackjackError, message
     end
   end
