@@ -20,6 +20,10 @@ class Card
     VALUES
   end
 
+  def self.suits
+    SUITS
+  end
+
   private
 
   def validate!
