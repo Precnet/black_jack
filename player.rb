@@ -1,4 +1,5 @@
 # Class for playing card representation
+require_relative 'blackjack_error.rb'
 
 class Card
   def initialize(value, suit)
@@ -19,6 +20,15 @@ class Card
   end
 
   def validate_value
+
+  end
+
+  def validate_type(attribute, type)
+    message = "'#{attribute}' should be '#{type}'! Got = '#{attribute.class}"
+    raise BlackjackError, message unless attribute.is_a? type
+  end
+
+  def validate_length(attribute, length)
 
   end
 end
