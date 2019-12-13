@@ -19,11 +19,11 @@ describe 'Player' do
     end
     it 'adds new cards to Player`s hand' do
       card1 = Card.new(:q, :spades)
-      @player.action_add_card(card1)
+      @player.add_card(card1)
       expect(@player.hand.length).to eq(1)
       expect(@player.hand[0]).to eq(card1)
       card2 = Card.new(:a, :diamonds)
-      @player.action_add_card(card2)
+      @player.add_card(card2)
       expect(@player.hand.length).to eq(2)
     end
     it 'increases player`s score' do
@@ -35,16 +35,16 @@ describe 'Player' do
       expect { @player.increase_score_by(-20) }.to raise_error BlackjackError
     end
     it 'makes bets by reducing amount of money by 10' do
-      @player.action_make_bet
+      @player.make_bet
       expect(@player.money).to eq(90)
-      @player.action_make_bet
-      @player.action_make_bet
+      @player.make_bet
+      @player.make_bet
       expect(@player.money).to eq(70)
-      @player.action_make_bet(20)
+      @player.make_bet(20)
       expect(@player.money).to eq(50)
-      expect { @player.action_make_bet(-10) }.to raise_error BlackjackError
-      expect { @player.action_make_bet([10]) }.to raise_error BlackjackError
-      expect { @player.action_make_bet('10'.to_sym) }.to raise_error BlackjackError
+      expect { @player.make_bet(-10) }.to raise_error BlackjackError
+      expect { @player.make_bet([10]) }.to raise_error BlackjackError
+      expect { @player.make_bet('10'.to_sym) }.to raise_error BlackjackError
     end
     it 'takes bank' do
       @player.take_bank(20)
@@ -53,6 +53,5 @@ describe 'Player' do
       expect(@player.money).to eq(120)
       expect { @player.take_bank(-10) }.to raise_error BlackjackError
     end
-    it 'ski'
   end
 end
