@@ -23,7 +23,7 @@ class Deck
     deck = []
     Card.values.each do |value|
       Card.suits.each_key do |suit|
-        deck.push(value.to_s + Card.suits[suit])
+        deck.push(Card.new(value, suit))
       end
     end
     deck
