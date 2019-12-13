@@ -5,9 +5,10 @@ require_relative 'blackjack_error.rb'
 class Player
   attr_reader :money, :hand, :score
 
-  def initialize(money = 100)
+  def initialize(table, money = 100)
     @hand = []
     @score = 0
+    @table = table
     @money = money
     validate!
   end
@@ -38,7 +39,13 @@ class Player
   private
 
   def validate!
+    validate_table
     validate_positive(@money)
+  end
+
+  def validate_table
+    message = 'Table should be an instance of Talbe class!'
+    raise BlackjackError, message unless @table.is_a? Table
   end
 
   def validate_positive(value)
