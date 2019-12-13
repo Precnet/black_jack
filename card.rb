@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Class for playing card representation
 require_relative 'blackjack_error.rb'
 
@@ -35,6 +37,8 @@ class Card
 
   def validate_length(attribute, length)
     message = "'#{attribute}' should have length between 0 and '#{length}'!"
-    raise BlackjackError, message unless 0 < attribute.length && attribute.length < length
+    unless !attribute.empty? && attribute.length < length
+      raise BlackjackError, message
+    end
   end
 end
