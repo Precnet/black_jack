@@ -2,6 +2,9 @@
 require_relative 'blackjack_error.rb'
 
 class Card
+  SUIT_LENGTH = 1
+  VALUE_LENGTH = 2
+
   def initialize(value, suit)
     @suit = suit
     @value = value
@@ -16,11 +19,13 @@ class Card
   end
 
   def validate_suit
-
+    validate_type(@suit, String)
+    validate_length(@suit, SUIT_LENGTH)
   end
 
   def validate_value
-
+    validate_type(@value, String)
+    validate_length(@value, VALUE_LENGTH)
   end
 
   def validate_type(attribute, type)
@@ -29,6 +34,7 @@ class Card
   end
 
   def validate_length(attribute, length)
-
+    message = "'#{attribute}' should have length between 0 and '#{length}'!"
+    raise BlackjackError, message unless 0 < attribute.length && attribute.length < length
   end
 end
