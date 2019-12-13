@@ -51,6 +51,11 @@ class Player
     @hand.push(card)
   end
 
+  def prepare_to_next_round
+    @score = 0
+    @hand = []
+  end
+
   private
 
   def validate!
