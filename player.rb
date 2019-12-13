@@ -17,6 +17,7 @@ class Player
   end
 
   def increase_score_by(value)
+    validate_positive(value)
     @score += value
   end
 
@@ -34,12 +35,12 @@ class Player
   private
 
   def validate!
-    validate_money
+    validate_positive(value)
   end
 
-  def validate_money
-    message = 'Money should be positive integer!'
-    money_correct = @money.is_a?(Integer) && @money.positive?
-    raise BlackjackError, message unless money_correct
+  def validate_positive(value)
+    message = 'It should be positive integer!'
+    value_is_correct = value.is_a?(Integer) && value.positive?
+    raise BlackjackError, message unless value_is_correct
   end
 end
