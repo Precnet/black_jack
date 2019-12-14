@@ -57,13 +57,7 @@ class Player
   private
 
   def validate!
-    validate_table
     validate_positive(@money)
-  end
-
-  def validate_table
-    message = 'Table should be an instance of Table class!'
-    raise BlackjackError, message unless @table.is_a? Table
   end
 
   def validate_positive(value)
