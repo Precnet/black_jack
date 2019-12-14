@@ -13,13 +13,13 @@ class Table
   end
 
   def add_to_table(person)
-    if person.is_a? Player
+    if person.class == Player
       message = 'There is a player at the table already!'
       raise BlackjackError, message if player
 
       @player = person
     elsif person.is_a? Dealer
-      message = 'There Can Be Only One... dealer!'
+      message = 'There is a dealer at the table already!'
       raise BlackjackError, message if @dealer
 
       @dealer = person
