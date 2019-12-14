@@ -5,7 +5,7 @@ require_relative 'dealer.rb'
 
 class Table
   SCORES = {}
-  attr_reader :player, :dealer
+  attr_reader :player, :dealer, :deck
 
   def initialize
     @player = nil
