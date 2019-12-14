@@ -5,16 +5,19 @@ require_relative 'dealer.rb'
 
 class Table
   SCORES = {}
-  attr_reader :players, :dealer
+  attr_reader :player, :dealer
 
   def initialize
-    @players = []
+    @player = nil
     @dealer = nil
   end
 
   def add_to_table(person)
     if person.is_a? Player
-      @players.push(person)
+      message = 'There is a player at the table already!'
+      raise BlackjackError, message if player
+
+      @player = person
     elsif person.is_a? Dealer
       message = 'There Can Be Only One... dealer!'
       raise BlackjackError, message if @dealer
@@ -36,13 +39,13 @@ class Table
   private
 
   def validate!
-    validate_players
+    validate_player
     validate_dealer
   end
 
-  def validate_players
-    message = 'There should be at least one player at a table!'
-    raise BlackjackError, message if @players.empty?
+  def validate_player
+    message = 'There should be a player at a table!'
+    raise BlackjackError, message unless @player
   end
 
   def validate_dealer
@@ -56,14 +59,14 @@ class Table
   end
 
   def distribute_initial_cards
-    @players[0].add_card(@deck.take_card)
-    @players[0].add_card(@deck.take_card)
+    @player.add_card(@deck.take_card)
+    @player.add_card(@deck.take_card)
     @dealer.add_card(@deck.take_card)
     @dealer.add_card(@deck.take_card)
   end
 
   def calculate_scores
-    @players[0].increase_score_by(calculate_score(@players[0].hand))
+    @player.increase_score_by(calculate_score(@player.hand))
     @dealer.increase_score_by(calculate_score(@dealer.hand))
   end
 

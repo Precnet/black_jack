@@ -9,7 +9,7 @@ describe 'Table' do
   end
   context 'player operation' do
     it 'should create an empty table' do
-      expect(@table.players).to eq([])
+      expect(@table.player).to be_nil
       expect(@table.dealer).to be_nil
     end
     it 'should add new player and dealer' do
