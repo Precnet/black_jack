@@ -13,8 +13,8 @@ describe 'Table' do
       expect(@table.dealer).to be_nil
     end
     it 'should add new player and dealer' do
-      # Player.new(@table)
-      Dealer.new
+      player = Player.new
+      dealer = Dealer.new
       # expect(@table.players.length).to eq(1)
       # expect(@table.dealer).not_to be_nil
     end
