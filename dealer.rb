@@ -1,8 +1,8 @@
 require_relative 'player.rb'
 
 class Dealer < Player
-  def initialize(table, money = 100)
-    super table, money
+  def initialize(money = 100)
+    super money
   end
 
   def take_turn
