@@ -6,11 +6,11 @@ require_relative '../table.rb'
 
 describe 'Dealer' do
   before(:all) do
-    @dealer = Dealer.new(Table.new)
+    @dealer = Dealer.new
   end
   context 'dealer operation' do
     it 'should create dealer objects' do
-      expect { Dealer.new(Table.new) }.not_to raise_error
+      expect { Dealer.new }.not_to raise_error
     end
   end
   context 'taking turn' do
