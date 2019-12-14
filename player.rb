@@ -5,13 +5,11 @@ require_relative 'blackjack_error.rb'
 class Player
   attr_reader :money, :hand, :score
 
-  def initialize(table, money = 100)
+  def initialize(money = 100)
     @hand = []
     @score = 0
-    @table = table
     @money = money
     validate!
-    table.add_to_table(self)
   end
 
   def increase_score_by(value)
