@@ -4,8 +4,9 @@ require_relative 'player.rb'
 require_relative 'dealer.rb'
 
 class Table
-  SCORES = { a => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8,
-             9 => 9, 10 => 10, j => 10, q => 10, k => 10 }.freeze
+  SCORES = { 'a' => 11, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6,
+             '7' => 7, '8' => 8, '9' => 9, '10' => 10, 'j' => 10,
+             'q' => 10, 'k' => 10 }.freeze
   attr_reader :player, :dealer, :deck
 
   def initialize
@@ -72,10 +73,9 @@ class Table
   end
 
   def calculate_score(cards)
-    10
-  end
-  
-  def get_card_score(card)
-    card_value = card.value
+    has_ace = cards.any? { |card| card.value.to_s == 'a' }
+    result = cards.map { |card| SCORES[card.value.to_s] }.sum
+    result -= 10 if result > 21 && has_ace
+    result
   end
 end
