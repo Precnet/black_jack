@@ -28,6 +28,7 @@ class Player
   end
 
   def take_turn
+    display_statistics
     begin
       show_choice
       choice = process_user_input
@@ -43,6 +44,13 @@ class Player
     when 3
       action_open_hands
     end
+  end
+
+  def display_statistics
+    puts "Money: #{@money}"
+    puts "Current score: #{@score}"
+    puts "Hand: #{@hand.map(&:to_s).join(' ')}"
+    puts
   end
 
   def add_card(card)
