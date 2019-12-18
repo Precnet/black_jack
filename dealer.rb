@@ -7,7 +7,7 @@ class Dealer < Player
 
   def take_turn
     if @score >= 17
-      :pass_turn
+      :skip_turn
     else
       :add_card
     end
