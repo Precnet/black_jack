@@ -21,4 +21,12 @@ describe 'Table' do
       expect(@table.dealer).not_to be_nil
     end
   end
+  context 'bank management' do
+    it 'should make bets for player and dealer' do
+      @table.make_bets
+      expect(@table.bank).to eq(20)
+      @table.make_bets(15)
+      expect(@table.bank).to eq(30)
+    end
+  end
 end
