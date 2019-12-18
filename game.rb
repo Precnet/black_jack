@@ -65,6 +65,10 @@ class Game
     # TODO
   end
 
+  def skipped_twice?
+    # TODO
+  end
+
   def construct_deck
     @deck = Deck.new
     @deck.shuffle!
