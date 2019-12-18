@@ -37,4 +37,21 @@ class Table
     @dealer.make_bet value
     @bank = 2 * value
   end
+
+  def validate!
+    validate_player
+    validate_dealer
+  end
+
+  private
+
+  def validate_player
+    message = 'There should be a player at a table!'
+    raise BlackjackError, message unless @player
+  end
+
+  def validate_dealer
+    message = 'There should be a dealer at the table!'
+    raise BlackjackError, message unless @dealer
+  end
 end
