@@ -40,7 +40,7 @@ class Table
     distribute_initial_cards
     calculate_scores
     display_statistics
-    @player.take_turn
+    #@player.take_turn
   end
 
   private
