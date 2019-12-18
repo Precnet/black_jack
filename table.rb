@@ -8,11 +8,12 @@ class Table
   SCORES = { 'a' => 11, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6,
              '7' => 7, '8' => 8, '9' => 9, '10' => 10, 'j' => 10,
              'q' => 10, 'k' => 10 }.freeze
-  attr_reader :player, :dealer, :deck
+  attr_reader :player, :dealer, :bank
 
   def initialize
     @player = nil
     @dealer = nil
+    @bank = 0
   end
 
   def add_to_table(person)
@@ -32,8 +33,9 @@ class Table
     end
   end
 
-  def make_bets
-    @player.make_bet
-    @dealer.make_bet
+  def make_bets(value = 10)
+    @player.make_bet value
+    @dealer.make_bet value
+    @bank = 2 * value
   end
 end
