@@ -27,9 +27,13 @@ class Game
   end
 
   def start_new_round
-    @table.make_bets
-    distribute_initial_cards
-    turn_loop
+    loop do
+      @table.player.clear_hand
+      @table.dealer.clear_hand
+      @table.make_bets
+      distribute_initial_cards
+      turn_loop
+    end
   end
 
   def turn_loop
@@ -59,23 +63,27 @@ class Game
   end
 
   def determine_winner
-    user_score = @table.player.score
-    dealer_score = @table.dealer.score
+    user_score = @table.player.score.to_i
+    dealer_score = @table.dealer.score.to_i
     calculate_scores
-    puts "User`s hand: #{@table.player.hand}, User`s score: #{@table.player.score}"
-    puts "Dealer`s hand: #{@table.dealer.hand}, Dealer`s score: #{@table.dealer.score}"
-    if user_score > dealer_score
-      @table.player.take_bank @table.bank
-      puts 'User wins!'
+    puts "User`s hand: #{@table.player.hand.map(&:to_s).join(' ')}, User`s score: #{@table.player.score}"
+    puts "Dealer`s hand: #{@table.dealer.hand.map(&:to_s).join(' ')}, Dealer`s score: #{@table.dealer.score}"
+    if (user_score <= 21) && (dealer_score > 21)
+      user_wins
+    elsif (dealer_score <= 21) && (user_score > 21)
+      dealer_wins
+    elsif (user_score > 21) && (dealer_score > 21)
+      draw
+    elsif user_score > dealer_score
+      user_wins
     elsif dealer_score > user_score
-      @table.dealer.take_bank @table.bank
-      puts 'Dealer wins!'
+      dealer_wins
     else
-      @table.player.take_bank @table.bank / 2
-      @table.dealer.take_bank @table.bank / 2
-      puts 'It`s a draw!'
+      draw
     end
     @stop_turn = true
+    puts
+    puts
   end
 
   def each_player_has_three_cards?
@@ -84,6 +92,22 @@ class Game
 
   def skipped_twice?
     @skipped_turns > 1
+  end
+
+  def user_wins
+    @table.player.take_bank @table.bank
+    puts 'User wins!'
+  end
+
+  def dealer_wins
+    @table.dealer.take_bank @table.bank
+    puts 'Dealer wins!'
+  end
+
+  def draw
+    @table.player.take_bank @table.bank / 2
+    @table.dealer.take_bank @table.bank / 2
+    puts 'It`s a draw!'
   end
 
   def construct_deck
