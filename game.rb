@@ -34,10 +34,10 @@ class Game
   end
 
   def distribute_initial_cards
-    @player.add_card(@deck.take_card)
-    @player.add_card(@deck.take_card)
-    @dealer.add_card(@deck.take_card)
-    @dealer.add_card(@deck.take_card)
+    2.times do
+      @player.add_card(@deck.take_card)
+      @dealer.add_card(@deck.take_card)
+    end
   end
 
   def calculate_scores
