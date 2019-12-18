@@ -3,7 +3,6 @@ class Game
     @table = Table.new
     @table.add_to_table(Player.new)
     @table.add_to_table(Dealer.new)
-    @table.start_game
   end
 
   def start_game
