@@ -9,7 +9,7 @@ class Dealer < Player
     if @score >= 17
       :pass_turn
     else
-      :take_card
+      :add_card
     end
   end
 end
