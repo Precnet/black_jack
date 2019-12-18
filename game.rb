@@ -37,32 +37,38 @@ class Game
     loop do
       calculate_scores
       display_statistics
-      process_user_turn(@table.player.take_turn)
+      process_user_turn(@table.player, @table.player.take_turn)
+      process_user_turn(@table.dealer, @table.dealer.take_turn)
     end
   end
 
-  def process_user_turn(action)
+  def process_user_turn(user, action)
     case action
     when :add_card
-      @table.player.add_card(@deck.take_card)
+      user.add_card(@deck.take_card)
     when :skip_turn
-      @table.dealer.take_turn
-      each_player_has_three_cards?
+      # no action pass feather
     when :open_hands
-      check_scores
+      determine_winner
     else
       raise BlackjackError, "Wrong input: #{action}!"
     end
   end
 
-  def check_scores
+  def determine_winner
     user_score = @table.player.score
     dealer_score = @table.dealer.score
-
+    if user_score > dealer_score
+      puts 'User wins!'
+    elsif dealer_score > user_score
+      puts 'Dealer wins!'
+    else
+      puts 'It`s a draw!'
+    end
   end
 
   def each_player_has_three_cards?
-    # TODO
+    @table.player.hand.length == 3 && @table.dealer.hand.length == 3
   end
 
   def skipped_twice?
