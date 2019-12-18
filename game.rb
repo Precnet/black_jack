@@ -1,4 +1,13 @@
+# frozen_string_literal: true
+
+require_relative 'table.rb'
+require_relative 'deck.rb'
+
 class Game
+  SCORES = { 'a' => 11, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6,
+             '7' => 7, '8' => 8, '9' => 9, '10' => 10, 'j' => 10,
+             'q' => 10, 'k' => 10 }.freeze
+
   def initialize
     @table = Table.new
     @table.add_to_table(Player.new)
@@ -8,7 +17,7 @@ class Game
   def start_game
     validate!
     construct_deck
-    game_loop
+    start_new_round
   end
 
   private
@@ -17,14 +26,43 @@ class Game
     @table.validate!
   end
 
-  def game_loop
+  def start_new_round
+    @table.make_bets
+    distribute_initial_cards
+    turn_loop
+  end
+
+  def turn_loop
+    @finish_turn = 1
     loop do
-      @table.make_bets
-      distribute_initial_cards
       calculate_scores
       display_statistics
-      # @player.take_turn
+      process_user_turn(@table.player.take_turn)
     end
+  end
+
+  def process_user_turn(action)
+    case action
+    when :add_card
+      @table.player.add_card(@deck.take_card)
+    when :skip_turn
+      @table.dealer.take_turn
+      each_player_has_three_cards?
+    when :open_hands
+      check_scores
+    else
+      raise BlackjackError, "Wrong input: #{action}!"
+    end
+  end
+
+  def check_scores
+    user_score = @table.player.score
+    dealer_score = @table.dealer.score
+
+  end
+
+  def each_player_has_three_cards?
+    # TODO
   end
 
   def construct_deck
@@ -40,8 +78,8 @@ class Game
   end
 
   def calculate_scores
-    @table.player.increase_score_by(calculate_score(@table.player.hand))
-    @table.dealer.increase_score_by(calculate_score(@table.dealer.hand))
+    @table.player.score = calculate_score(@table.player.hand)
+    @table.dealer.score = calculate_score(@table.dealer.hand)
   end
 
   def calculate_score(cards)
@@ -58,3 +96,5 @@ class Game
     puts
   end
 end
+
+Game.new.start_game
