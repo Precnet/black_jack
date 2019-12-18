@@ -23,6 +23,7 @@ describe 'Table' do
   end
   context 'bank management' do
     it 'should make bets for player and dealer' do
+      expect(@table.bank).to eq(0)
       @table.make_bets
       expect(@table.bank).to eq(20)
       @table.make_bets(15)
