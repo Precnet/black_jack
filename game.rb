@@ -37,9 +37,9 @@ class Game
   end
 
   def turn_loop
-    @skipped_turns = 0
     @stop_turn = false
     until @stop_turn
+      @skipped_turns = 0
       calculate_scores
       display_statistics(@table.player)
       process_user_turn(@table.player)
@@ -72,11 +72,11 @@ class Game
   end
 
   def determine_winner
+    calculate_scores
     user_score = @table.player.score.to_i
     dealer_score = @table.dealer.score.to_i
-    calculate_scores
-    puts "User`s hand: #{@table.player.hand.map(&:to_s).join(' ')}, User`s score: #{@table.player.score}"
-    puts "Dealer`s hand: #{@table.dealer.hand.map(&:to_s).join(' ')}, Dealer`s score: #{@table.dealer.score}"
+    puts "User`s hand: #{@table.player.hand.map(&:to_s).join(' ')}, User`s score: #{user_score}"
+    puts "Dealer`s hand: #{@table.dealer.hand.map(&:to_s).join(' ')}, Dealer`s score: #{dealer_score}"
     if (user_score <= 21) && (dealer_score > 21)
       user_wins
     elsif (dealer_score <= 21) && (user_score > 21)
