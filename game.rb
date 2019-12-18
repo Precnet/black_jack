@@ -35,14 +35,14 @@ class Game
 
   def distribute_initial_cards
     2.times do
-      @player.add_card(@deck.take_card)
-      @dealer.add_card(@deck.take_card)
+      @table.player.add_card(@deck.take_card)
+      @table.dealer.add_card(@deck.take_card)
     end
   end
 
   def calculate_scores
-    @player.increase_score_by(calculate_score(@player.hand))
-    @dealer.increase_score_by(calculate_score(@dealer.hand))
+    @table.player.increase_score_by(calculate_score(@table.player.hand))
+    @table.dealer.increase_score_by(calculate_score(@table.dealer.hand))
   end
 
   def calculate_score(cards)
@@ -53,9 +53,9 @@ class Game
   end
 
   def display_statistics
-    puts "Money: #{@player.money}"
-    puts "Current score: #{@player.score}"
-    puts "Hand: #{@player.hand.map(&:to_s).join(' ')}"
+    puts "Money: #{@table.player.money}"
+    puts "Current score: #{@table.player.score}"
+    puts "Hand: #{@table.player.hand.map(&:to_s).join(' ')}"
     puts
   end
 end
