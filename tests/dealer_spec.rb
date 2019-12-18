@@ -2,7 +2,6 @@
 
 require 'rspec'
 require_relative '../dealer.rb'
-require_relative '../table.rb'
 
 describe 'Dealer' do
   before(:all) do

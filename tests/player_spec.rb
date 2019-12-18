@@ -2,7 +2,6 @@
 
 require 'rspec'
 require_relative '../player.rb'
-require_relative '../table.rb'
 
 describe 'Player' do
   before(:all) do
