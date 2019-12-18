@@ -30,6 +30,7 @@ class Table
   end
 
   def make_bets(value = 10)
+    puts 'All bets are off!'
     @player.make_bet value
     @dealer.make_bet value
     @bank = 2 * value
