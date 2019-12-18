@@ -44,7 +44,13 @@ class Game
       display_statistics(@table.player)
       process_user_turn(@table.player)
       process_user_turn(@table.dealer)
-      determine_winner if each_player_has_three_cards? || skipped_twice?
+      if each_player_has_three_cards?
+        puts 'Both players have three cards. Open hands!'
+        determine_winner
+      elsif skipped_twice?
+        puts 'Both players skipped turn. Open hands!'
+        determine_winner
+      end
     end
   end
 
@@ -53,9 +59,12 @@ class Game
     case action
     when :add_card
       user.add_card(@deck.take_card)
+      puts "#{user.class} takes one more card!"
     when :skip_turn
       @skipped_turns += 1
+      puts "#{user.class} skips turn!"
     when :open_hands
+      puts "#{user.class} decides to open hands!"
       determine_winner
     else
       raise BlackjackError, "Wrong input: #{action}!"
