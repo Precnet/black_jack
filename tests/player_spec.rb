@@ -26,12 +26,12 @@ describe 'Player' do
       expect(@player.hand.length).to eq(2)
     end
     it 'increases player`s score' do
-      @player.increase_score_by(10)
+      @player.score = 10
       expect(@player.score).to eq(10)
-      @player.increase_score_by(100)
-      expect(@player.score).to eq(110)
-      expect { @player.increase_score_by('100') }.to raise_error BlackjackError
-      expect { @player.increase_score_by(-20) }.to raise_error BlackjackError
+      @player.score = 100
+      expect(@player.score).to eq(100)
+      expect { @player.score = '100' }.to raise_error BlackjackError
+      expect { @player.score = -20 }.to raise_error BlackjackError
     end
     it 'makes bets by reducing amount of money by 10' do
       @player.make_bet
