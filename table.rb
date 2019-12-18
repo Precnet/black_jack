@@ -2,7 +2,6 @@
 
 require_relative 'player.rb'
 require_relative 'dealer.rb'
-require_relative 'deck.rb'
 
 class Table
   SCORES = { 'a' => 11, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6,
