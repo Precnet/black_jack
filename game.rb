@@ -33,21 +33,24 @@ class Game
   end
 
   def turn_loop
-    @finish_turn = 1
-    loop do
+    @skipped_turns = 0
+    @stop_turn = false
+    until @stop_turn
       calculate_scores
-      display_statistics
-      process_user_turn(@table.player, @table.player.take_turn)
-      process_user_turn(@table.dealer, @table.dealer.take_turn)
+      display_statistics(@table.player)
+      process_user_turn(@table.player)
+      process_user_turn(@table.dealer)
+      determine_winner if each_player_has_three_cards? || skipped_twice?
     end
   end
 
-  def process_user_turn(user, action)
+  def process_user_turn(user)
+    action = user.take_turn
     case action
     when :add_card
       user.add_card(@deck.take_card)
     when :skip_turn
-      # no action pass feather
+      @skipped_turns += 1
     when :open_hands
       determine_winner
     else
@@ -58,13 +61,21 @@ class Game
   def determine_winner
     user_score = @table.player.score
     dealer_score = @table.dealer.score
+    calculate_scores
+    puts "User`s hand: #{@table.player.hand}, User`s score: #{@table.player.score}"
+    puts "Dealer`s hand: #{@table.dealer.hand}, Dealer`s score: #{@table.dealer.score}"
     if user_score > dealer_score
+      @table.player.take_bank @table.bank
       puts 'User wins!'
     elsif dealer_score > user_score
+      @table.dealer.take_bank @table.bank
       puts 'Dealer wins!'
     else
+      @table.player.take_bank @table.bank / 2
+      @table.dealer.take_bank @table.bank / 2
       puts 'It`s a draw!'
     end
+    @stop_turn = true
   end
 
   def each_player_has_three_cards?
@@ -72,7 +83,7 @@ class Game
   end
 
   def skipped_twice?
-    # TODO
+    @skipped_turns > 1
   end
 
   def construct_deck
@@ -99,10 +110,10 @@ class Game
     result
   end
 
-  def display_statistics
-    puts "Money: #{@table.player.money}"
-    puts "Current score: #{@table.player.score}"
-    puts "Hand: #{@table.player.hand.map(&:to_s).join(' ')}"
+  def display_statistics(user)
+    puts "Money: #{user.money}"
+    puts "Current score: #{user.score}"
+    puts "Hand: #{user.hand.map(&:to_s).join(' ')}"
     puts
   end
 end
