@@ -15,8 +15,7 @@ class Game
   private
 
   def validate!
-    validate_player
-    validate_dealer
+    @table.validate!
   end
 
   def game_loop
@@ -58,15 +57,5 @@ class Game
     puts "Current score: #{@player.score}"
     puts "Hand: #{@player.hand.map(&:to_s).join(' ')}"
     puts
-  end
-
-  def validate_player
-    message = 'There should be a player at a table!'
-    raise BlackjackError, message unless @player
-  end
-
-  def validate_dealer
-    message = 'There should be a dealer at the table!'
-    raise BlackjackError, message unless @dealer
   end
 end
