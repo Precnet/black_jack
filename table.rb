@@ -2,6 +2,7 @@
 
 require_relative 'player.rb'
 require_relative 'dealer.rb'
+require_relative 'deck.rb'
 
 class Table
   SCORES = { 'a' => 11, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6,
@@ -34,8 +35,12 @@ class Table
   def start_game
     validate!
     construct_deck
+    # ToDo
+    # make_bets
     distribute_initial_cards
     calculate_scores
+    display_statistics
+    @player.take_turn
   end
 
   private
@@ -73,9 +78,21 @@ class Table
   end
 
   def calculate_score(cards)
-    has_ace = cards.any? { |card| card.value.to_s == 'a' }
+    has_ace = cards.any? { |card| card.value == :a }
     result = cards.map { |card| SCORES[card.value.to_s] }.sum
     result -= 10 if result > 21 && has_ace
     result
   end
+
+  def display_statistics
+    puts "Money: #{@player.money}"
+    puts "Current score: #{@player.score}"
+    puts "Hand: #{@player.hand.map(&:to_s).join(' ')}"
+    puts
+  end
 end
+
+table = Table.new
+table.add_to_table(Player.new)
+table.add_to_table(Dealer.new)
+table.start_game
