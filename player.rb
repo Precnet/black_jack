@@ -12,9 +12,9 @@ class Player
     validate!
   end
 
-  def increase_score_by(value)
+  def score=(value)
     validate_positive(value)
-    @score += value
+    @score = value
   end
 
   def make_bet(value = 10)
