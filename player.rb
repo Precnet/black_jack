@@ -22,6 +22,10 @@ class Player
     @money -= value
   end
 
+  def clear_hand
+    @hand = []
+  end
+
   def take_bank(value)
     validate_positive(value)
     @money += value
