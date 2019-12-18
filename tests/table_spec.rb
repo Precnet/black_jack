@@ -21,9 +21,4 @@ describe 'Table' do
       expect(@table.dealer).not_to be_nil
     end
   end
-  context 'starting new game' do
-    it 'should start new game' do
-      @table.start_game
-    end
-  end
 end
