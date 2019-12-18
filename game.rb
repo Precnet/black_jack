@@ -142,4 +142,4 @@ class Game
   end
 end
 
-Game.new.start_game
+Game.new.start_game if $PROGRAM_NAME == __FILE__
