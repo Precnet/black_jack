@@ -20,4 +20,8 @@ class ConsoleInterface < Interface
     puts '2. Skip turn'
     puts '3. Open hands'
   end
+
+  def user_input
+    gets.chomp
+  end
 end

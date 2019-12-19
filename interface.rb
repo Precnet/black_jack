@@ -14,4 +14,8 @@ class Interface
   def show_menu
     raise BlackjackError, 'Not implemented in a child class!'
   end
+
+  def user_input
+    raise BlackjackError, 'Not implemented in a child class!'
+  end
 end

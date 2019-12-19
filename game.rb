@@ -56,13 +56,19 @@ class Game
         @interface.show_message('Both players skipped turn. Open hands!')
         determine_winner
       elsif overdraw?
-
+        @interface.show_message('You`ve got an overdraw. Open hands!')
+        determine_winner
       end
     end
   end
 
   def process_user_turn(user)
-    action = user.take_turn
+    if user.is_a? Dealer
+      action = user.take_turn
+    else
+      @interface.show_menu
+      action = user.take_turn(@interface.user_input)
+    end
     case action
     when :add_card
       user.add_card(@deck.take_card)
@@ -122,23 +128,23 @@ class Game
 
   def overdraw?
     calculate_scores
-    @table.player.score > 21 && @stop_turn == 1
+    (@table.player.score > 21) && (@skipped_turns == 1)
   end
 
   def user_wins
     @table.player.take_bank @table.bank
-    puts 'User wins!'
+    @interface.show_message('User wins!')
   end
 
   def dealer_wins
     @table.dealer.take_bank @table.bank
-    puts 'Dealer wins!'
+    @interface.show_message('Dealer wins!')
   end
 
   def draw
     @table.player.take_bank @table.bank / 2
     @table.dealer.take_bank @table.bank / 2
-    puts 'It`s a draw!'
+    @interface.show_message('It`s a draw!')
   end
 
   def construct_deck

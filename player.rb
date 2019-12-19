@@ -31,9 +31,9 @@ class Player
     @money += value
   end
 
-  def take_turn
+  def take_turn(input)
     begin
-      choice = process_user_input
+      choice = process_user_input(input)
     rescue BlackjackError
       retry
     end
@@ -69,8 +69,7 @@ class Player
     raise BlackjackError, message unless value_is_correct
   end
 
-  def process_user_input
-    input = gets.chomp
+  def process_user_input(input)
     check_input(input)
     input
   end
