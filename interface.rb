@@ -10,4 +10,8 @@ class Interface
   def show_message
     raise BlackjackError, 'Not implemented in a child class!'
   end
+
+  def show_menu
+    raise BlackjackError, 'Not implemented in a child class!'
+  end
 end

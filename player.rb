@@ -33,7 +33,6 @@ class Player
 
   def take_turn
     begin
-      show_choice
       choice = process_user_input
     rescue BlackjackError
       retry
@@ -68,13 +67,6 @@ class Player
     message = 'It should be positive integer!'
     value_is_correct = value.is_a?(Integer) && value.positive?
     raise BlackjackError, message unless value_is_correct
-  end
-
-  def show_choice
-    puts 'It`s your turn. Choose one of the options:'
-    puts '1. Take one more card'
-    puts '2. Skip turn'
-    puts '3. Open hands'
   end
 
   def process_user_input

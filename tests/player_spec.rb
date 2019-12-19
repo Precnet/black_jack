@@ -54,11 +54,6 @@ describe 'Player' do
     end
   end
   context 'taking turn' do
-    it 'displays choice menu to user and process input' do
-      message = "It`s your turn. Choose one of the options:\n1. Take one more card\n2. Skip turn\n3. Open hands\n"
-      allow_any_instance_of(Kernel).to receive(:gets).and_return('1')
-      expect { @player.take_turn }.to output(message).to_stdout
-    end
     it 'should correctly prepare to next round' do
       @player.prepare_to_next_round
       expect(@player.score).to eq(0)
