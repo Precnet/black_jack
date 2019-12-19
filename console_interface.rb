@@ -9,4 +9,8 @@ class ConsoleInterface < Interface
     puts "Hand: #{user.hand.map(&:to_s).join(' ')}"
     puts
   end
+
+  def show_message(message)
+    puts message
+  end
 end
