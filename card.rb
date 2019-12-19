@@ -16,14 +16,6 @@ class Card
     validate!
   end
 
-  def self.values
-    VALUES
-  end
-
-  def self.suits
-    SUITS
-  end
-
   def to_s
     @value.to_s + SUITS[@suit]
   end
