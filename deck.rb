@@ -21,8 +21,8 @@ class Deck
 
   def create_deck
     deck = []
-    Card.values.each do |value|
-      Card.suits.each_key do |suit|
+    Card::VALUES.each do |value|
+      Card::SUITS.each_key do |suit|
         deck.push(Card.new(value, suit))
       end
     end
