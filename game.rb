@@ -2,13 +2,15 @@
 
 require_relative 'table.rb'
 require_relative 'deck.rb'
+require_relative 'console_interface.rb'
 
 class Game
   SCORES = { 'a' => 11, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6,
              '7' => 7, '8' => 8, '9' => 9, '10' => 10, 'j' => 10,
              'q' => 10, 'k' => 10 }.freeze
 
-  def initialize
+  def initialize(interface)
+    @interface = interface
     @table = Table.new
     @table.add_to_table(Player.new)
     @table.add_to_table(Dealer.new)
@@ -23,6 +25,7 @@ class Game
   private
 
   def validate!
+    validate_interface
     @table.validate!
   end
 
@@ -41,15 +44,19 @@ class Game
     until @stop_turn
       @skipped_turns = 0
       calculate_scores
-      display_statistics(@table.player)
+      @interface.display_statistics(@table.player)
       process_user_turn(@table.player)
+      break if @stop_turn
+
       process_user_turn(@table.dealer)
       if each_player_has_three_cards?
-        puts 'Both players have three cards. Open hands!'
+        @interface.show_message('Both players have three cards. Open hands!')
         determine_winner
       elsif skipped_twice?
-        puts 'Both players skipped turn. Open hands!'
+        @interface.show_message('Both players skipped turn. Open hands!')
         determine_winner
+      elsif overdraw?
+
       end
     end
   end
@@ -59,12 +66,12 @@ class Game
     case action
     when :add_card
       user.add_card(@deck.take_card)
-      puts "#{user.class} takes one more card!"
+      @interface.show_message("#{user.class} takes one more card!")
     when :skip_turn
       @skipped_turns += 1
-      puts "#{user.class} skips turn!"
+      @interface.show_message("#{user.class} skips turn!")
     when :open_hands
-      puts "#{user.class} decides to open hands!"
+      @interface.show_message("#{user.class} decides to open hands!")
       determine_winner
     else
       raise BlackjackError, "Wrong input: #{action}!"
@@ -73,10 +80,10 @@ class Game
 
   def determine_winner
     calculate_scores
-    user_score = @table.player.score.to_i
-    dealer_score = @table.dealer.score.to_i
-    puts "User`s hand: #{@table.player.hand.map(&:to_s).join(' ')}, User`s score: #{user_score}"
-    puts "Dealer`s hand: #{@table.dealer.hand.map(&:to_s).join(' ')}, Dealer`s score: #{dealer_score}"
+    @interface.show_message(get_info(@table.player))
+    @interface.show_message(get_info(@table.dealer))
+    user_score = get_score(@table.player)
+    dealer_score = get_score(@table.dealer)
     if (user_score <= 21) && (dealer_score > 21)
       user_wins
     elsif (dealer_score <= 21) && (user_score > 21)
@@ -95,12 +102,27 @@ class Game
     puts
   end
 
+  def get_info(person)
+    person_score = get_score(person)
+    person_hand = person.hand.map(&:to_s).join(' ')
+    "#{person.class}`s hand: #{person_hand}, User`s score: #{person_score}"
+  end
+
+  def get_score(person)
+    person.score.to_i
+  end
+
   def each_player_has_three_cards?
     @table.player.hand.length == 3 && @table.dealer.hand.length == 3
   end
 
   def skipped_twice?
     @skipped_turns > 1
+  end
+
+  def overdraw?
+    calculate_scores
+    @table.player.score > 21 && @stop_turn == 1
   end
 
   def user_wins
@@ -143,12 +165,9 @@ class Game
     result
   end
 
-  def display_statistics(user)
-    puts "Money: #{user.money}"
-    puts "Current score: #{user.score}"
-    puts "Hand: #{user.hand.map(&:to_s).join(' ')}"
-    puts
+  def validate_interface
+    @interface.is_a? Interface
   end
 end
 
-Game.new.start_game if $PROGRAM_NAME == __FILE__
+Game.new(ConsoleInterface.new).start_game if $PROGRAM_NAME == __FILE__
